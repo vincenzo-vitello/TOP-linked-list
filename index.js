@@ -11,12 +11,17 @@ class LinkedList {
     }
     prepend(value){
         let temp = null;
-        if(this.listHead != null) temp = this.listHead;
+        if(this.listHead != null) {
+            temp = this.listHead;
+        };
         this.listHead = new Node(value);
         this.listHead.next = temp;
     }
     append(value){
-        if(!this.listHead) this.prepend(value)
+        if(this.listHead === null){
+            this.prepend(value) 
+            return
+        }
         
         let temp = this.listHead;
         while(temp.next) temp = temp.next;
@@ -36,7 +41,7 @@ class LinkedList {
     }
     getTail(){
         let temp = this.listHead;
-        while(temp.next) temp = temp.next;
+        while(temp.next !== null) temp = temp.next;
         return temp
     }
     atIndex(index){
@@ -59,7 +64,7 @@ class LinkedList {
     contains(val){
         let temp = this.listHead;
         while(temp){
-            if(temp.value === val) return true
+            if(temp.data === val) return true
             temp = temp.next
         }
         return false
@@ -68,7 +73,7 @@ class LinkedList {
         let temp = this.listHead;
         let index = 0;
         while(temp){
-            if(temp.value === val) return index;
+            if(temp.data === val) return index;
             temp = temp.next;
             index++
         }
@@ -78,9 +83,10 @@ class LinkedList {
         let temp = this.listHead;
         let listToString = "";
         while(temp !== null){
-            listToString += `(${temp.value}) -> `
+            listToString += `(${temp.data}) -> `
             temp = temp.next
         }
+        return listToString + "null"
     }
     insertAt(value, index){
         if(!this.listHead) this.prepend(value);
@@ -115,4 +121,23 @@ list.append(2);
 list.prepend(1);
 list.append(3);
 
+console.log(list.toString())
+console.log("size: ", list.getSize())
+console.log("head: ", list.getHead())
+console.log("tail: ", list.getTail())
+console.log("at index 2: ", list.atIndex(2))
+console.log("at index 4: ", list.atIndex(4))
+console.log("removed last element")
+list.pop()
+console.log(list.toString())
+console.log("list contains 1:", list.contains(1))
+console.log("find 1 at: ", list.find(1))
+console.log("prepending 4")
+list.prepend(4);
+console.log(list.toString())
+console.log("injecting 5 at index 1")
+list.insertAt(5, 1)
+console.log("added 5 at index 1: ", list.toString())
+console.log("removing element at index 2")
+list.removeAt(2)
 console.log(list.toString())
